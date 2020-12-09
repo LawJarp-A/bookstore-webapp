@@ -1,0 +1,19 @@
+.addproducts{
+    width: 20%;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    padding: 20px;
+}
+
+.fields{
+    margin:20px;
+}
+
+.buttons{
+    text-align: center;
+    align-items: center;
+    margin:15px;
+    padding: 10px;
+}
