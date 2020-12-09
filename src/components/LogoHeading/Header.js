@@ -1,10 +1,12 @@
 import React from "react";
 import "./header.css";
+import Typography from '@material-ui/core/Typography';
+
 
 function Header() {
   return (
     <div className="Header">
-      <h1>Book Store</h1>
+      <Typography variant="h3">Book Store</Typography>
     </div>
   );
 }
