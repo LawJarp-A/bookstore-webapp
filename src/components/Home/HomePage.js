@@ -7,6 +7,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 
 import "./homepage.css";
+import { Redirect } from "react-router-dom";
 const axios = require("axios");
 
 const token = localStorage.getItem("accessToken");
@@ -63,9 +64,24 @@ function HomePage(props) {
                 Welcome User! <br></br> {user.email}
               </Typography>
             </div>
-            <div className="addPost">
-              <Button variant="contained" href="/sell">Sell Book</Button>
+            <div className="buttonHP">
+              <div className="eachButton">
+                <Button variant="contained" href="/sell">
+                  Sell Book
+                </Button>
               </div>
+              <div className="eachButton">
+                <Button
+                  variant="contained"
+                  href="/login"
+                  onClick={() => {
+                    localStorage.setItem("accessToken", "None");
+                  }}
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
           </div>
 
           <div>

@@ -5,6 +5,8 @@
   padding: 40px;
   max-width: 200px;
   text-align: center;
+  align-items: center;
+
 }
 
 .checkboxes {
@@ -15,6 +17,8 @@
 
 .button {
   margin: 20px;
+  text-align: center;
+  align-items: center;
 
 }
 
@@ -22,4 +26,5 @@
   overflow: auto;
   word-wrap: break-word;
   max-height: 400px;
+  align-items: center;
 }

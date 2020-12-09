@@ -7,25 +7,24 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 
-import "./loginpage.css";
+import "./registerpage.css";
 
 const axios = require("axios");
 
-function LoginPage() {
+function Register() {
   var fields = {};
   const [error, setError] = useState();
-  const [loginState, setLogin] = useState(true);
-  function login() {
+//   const [loginState, setLogin] = useState(true);
+  function register() {
     axios
-      .post("http://localhost:5001/api/login", {
+      .post("http://localhost:5001/api/register", {
+        username: fields.username,
         email: fields.email,
         password: fields.password,
       })
       .then((res) => {
         console.log(res.data);
-        setError("Success");
-        localStorage.setItem('accessToken', res.data.accessToken);
-        setLogin(false);
+        setError("Registered");
       },
       (err)=>{
         setError(err.message)
@@ -35,6 +34,20 @@ function LoginPage() {
     <div className="loginpage">
       <Card>
         <CardContent>
+        <div className="fields">
+            <div className="fields">
+              <label>Username</label>
+            </div>
+            <TextField
+              required
+              id="username"
+              label="Required"
+              variant="outlined"
+              onChange={(event) => {
+                fields[event.target.id] = event.target.value;
+              }}
+            />
+          </div>
           <div className="fields">
             <div className="fields">
               <label>Email</label>
@@ -66,15 +79,14 @@ function LoginPage() {
           <div className="fields">{error}</div>
         </CardContent>
         <CardActions>
-          <Button variant="outlined" onClick={login}>
-            Login
+          <Button variant="outlined" onClick={register}>
+            Register
           </Button>
-          <Button variant="outlined" href="/register">Register</Button>
-          <Button disabled = {loginState} variant="outlined" href="/home">Home</Button>
+          <Button variant="outlined" href="/login">Login</Button>
         </CardActions>
       </Card>
     </div>
   );
 }
 
-export default LoginPage;
+export default Register;

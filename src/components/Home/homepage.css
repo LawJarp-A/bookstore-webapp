@@ -19,8 +19,13 @@
   margin: 10px;
 }
 
-.addPost{
+.buttonHP{
   width: 100%;
-  text-align: right;
-  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  }
+
+.eachButton{
+  margin: 10px;
+
 }

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Rating from '@material-ui/lab/Rating';
 
 import "./posts.css";
 
@@ -16,6 +18,8 @@ const config = {
 };
 
 function Post(props) {
+
+  const [value, setValue] = useState(2);
   
   function sendOffer(){
     axios.post("http://localhost:5001/api/offers",{
@@ -53,25 +57,31 @@ function Post(props) {
               <br></br>
               <Typography variant="h6">Price: {props.post.price}</Typography>
             </div>
-            <div className="about">
-              
-            </div>
+            <div className="about"></div>
           </div>
         </CardContent>
         <CardActions>
-          <Button variant="outlined" size="small" onClick={()=>{
-            // eslint-disable-next-line no-restricted-globals
-            if(confirm("Please confirm offer"))
-            {sendOffer()}
-            }}>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              // eslint-disable-next-line no-restricted-globals
+              if (confirm("Please confirm offer")) {
+                sendOffer();
+              }
+            }}
+          >
             Send Offer
           </Button>
           <Button variant="outlined" size="small">
             Feedback
           </Button>
-          <Button variant="outlined" size="small">
-            Rate
-          </Button>
+          <Rating
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          />
         </CardActions>
       </Card>
     </div>
