@@ -6,7 +6,8 @@
   max-width: 200px;
   text-align: center;
   align-items: center;
-
+  border-style: solid;
+  border-top: 0;
 }
 
 .checkboxes {

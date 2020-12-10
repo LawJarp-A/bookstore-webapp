@@ -6,3 +6,18 @@
 .info{
     display: flex;
 }
+
+.feedback{
+    margin-top: 10px;
+
+}
+
+.feedbackItems{
+    margin: 2px;
+    /* text-align: right; */
+    overflow: auto;
+    max-height: 200px;
+    max-width: 300px;
+    border-style: groove;
+    padding: 10px;
+}

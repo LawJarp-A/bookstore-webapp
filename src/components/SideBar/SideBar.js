@@ -6,6 +6,7 @@ import "./sidebar.css";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
+
 const axios = require("axios");
 const token = localStorage.getItem("accessToken");
 const config = {
@@ -74,7 +75,7 @@ function SideBar(props) {
       <hr></hr>
       <div>
         {checkboxes.map((item) => (
-          <div className="checkboxes">
+          <div className="checkboxes" key={item.name}>
             <MyCheckbox
               name={item.name}
               checked={subjectsInFilter[item.name]}

@@ -23,7 +23,7 @@ function AddProduct() {
         setError("Successful");
       },
       (err) => {
-        setError(err);
+        setError(err.message);
       }
     );
   }

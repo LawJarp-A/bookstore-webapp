@@ -6,7 +6,7 @@ import "./app.css";
 import HomePage from "./components/Home/HomePage";
 import Header from "./components/LogoHeading/Header";
 import LoginPage from "./components/LoginPage/LoginPage";
-import RegisterPage from "./components/RegisterPage/ResgistPage";
+import RegisterPage from "./components/RegisterPage/ResgisterPage";
 import SideBar from "./components/SideBar/SideBar";
 import AddProduct from "./components/AddProduct/AddProduct";
 

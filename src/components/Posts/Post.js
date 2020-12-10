@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -6,6 +6,10 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Rating from '@material-ui/lab/Rating';
+import TextField from "@material-ui/core/TextField";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import "./posts.css";
 
@@ -19,21 +23,94 @@ const config = {
 
 function Post(props) {
 
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(props.rating);
+  const [feedback, setFeedback] = useState("");
+  const [feedbackToShow, setFeedbacktoshow] = useState([]);
   
-  function sendOffer(){
-    axios.post("http://localhost:5001/api/offers",{
-      seller_email: props.post.seller,
-      buyer_email: props.user,
-      product_id: props.post.product_id,
-    },
-    config)
-    .then((res)=>{
-      console.log(res.data);
-    },
-    (err)=> {
-      alert("Try again", err)
-    })
+  function sendOffer() {
+    axios
+      .post(
+        "http://localhost:5001/api/offers",
+        {
+          seller_email: props.post.seller,
+          buyer_email: props.user,
+          product_id: props.post.product_id,
+        },
+        config
+      )
+      .then(
+        (res) => {
+          console.log(res.data);
+        },
+        (err) => {
+          alert(err.message);
+        }
+      );
+  }
+
+  function updateRating() {
+    axios
+      .put(
+        "http://localhost:5001/api/ratings",
+        {
+          rating: value,
+        },
+        config
+      )
+      .then(
+        (res) => {
+          console.log(res.data);
+        },
+        (err) => {
+          alert(err.message);
+        }
+      );
+  }
+
+
+useEffect(()=>{
+  function getFeedback() {
+    axios
+      .get(
+        "http://localhost:5001/api/reviews",
+        { params: {
+          product_id: props.post.product_id,
+        }},
+        config
+      )
+      .then(
+        (res) => {
+          console.log(res.data);
+          setFeedbacktoshow(res.data);
+        },
+        (err) => {
+          alert(err.message);
+        }
+      );
+  }
+  getFeedback()
+},[props.post.product_id])
+
+  function updateFeedback() {
+    axios
+      .post(
+        "http://localhost:5001/api/reviews",
+        {
+          product_id: props.post.product_id,
+          product_name: props.post.product_name,
+          reviewer_email: props.user,
+          comment: feedback,
+        },
+        config
+      )
+      .then(
+        (res) => {
+          updateRating();
+        },
+        (err) => {
+          alert(err.message);
+        }
+      );
   }
 
   return (
@@ -41,7 +118,7 @@ function Post(props) {
       <Card variant="outlined">
         <CardContent>
           <div className="info">
-            <div>
+            <div style={{ flexGrow: 1 }}>
               <Typography variant="h5" component="h2">
                 Book Title: {props.post.product_name}
               </Typography>
@@ -56,8 +133,42 @@ function Post(props) {
               </Typography>
               <br></br>
               <Typography variant="h6">Price: {props.post.price}</Typography>
+              <div className="feedback">
+                <TextField
+                  id="feedback"
+                  label="Feed Back"
+                  variant="outlined"
+                  onChange={(event) => {
+                    setFeedback(event.target.value);
+                  }}
+                />
+              </div>
             </div>
-            <div className="about"></div>
+            <div className="feedbackItems">
+            <Typography variant="h6">Reviews</Typography>
+
+              <List>
+                {feedbackToShow.map((item) => (
+                  <div key={item._id}>
+                    <ListItem alignItems="right">
+                      <ListItemText
+                        primary={item.reviewer_email}
+                        secondary={
+                          <React.Fragment>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              color="textPrimary"
+                            >{item.comment}</Typography>
+                          </React.Fragment>
+                        }
+                      />
+                    </ListItem>
+                    <hr></hr>
+                  </div>
+                ))}
+              </List>
+            </div>
           </div>
         </CardContent>
         <CardActions>
@@ -73,13 +184,20 @@ function Post(props) {
           >
             Send Offer
           </Button>
-          <Button variant="outlined" size="small">
-            Feedback
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              updateFeedback();
+            }}
+          >
+            Submit Feedback
           </Button>
           <Rating
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
+              console.log(newValue);
             }}
           />
         </CardActions>

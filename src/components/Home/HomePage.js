@@ -7,7 +7,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from "@material-ui/core/Button";
 
 import "./homepage.css";
-import { Redirect } from "react-router-dom";
 const axios = require("axios");
 
 const token = localStorage.getItem("accessToken");
@@ -88,7 +87,9 @@ function HomePage(props) {
             {posts
               .filter((post) => props.filters.includes(post.subject))
               .map((item) => (
-                <Post post={item} user={user.email}></Post>
+                <div key={item.product_id}>
+                <Post post={item} user={user.email} rating={user.rating}></Post>
+                </div>
               ))}
           </div>
         </div>

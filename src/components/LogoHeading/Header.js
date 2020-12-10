@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 function Header() {
   return (
     <div className="Header">
-      <Typography variant="h3">Book Store</Typography>
+      <Typography variant="h4">Book Store</Typography>
     </div>
   );
 }
